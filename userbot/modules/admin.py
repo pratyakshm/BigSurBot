@@ -328,22 +328,25 @@ async def spider(spdr):
         try:
             await spdr.client(EditBannedRequest(spdr.chat_id, user.id, MUTE_RIGHTS))
 
-            # Announce that the function is done
-            if reason:
-                await spdr.edit(f"User has been muted.\nReason: {reason}")
-            else:
-                await spdr.edit("User has been muted.")
-
-            # Announce to logging group
-            if BOTLOG:
-                await spdr.client.send_message(
-                    BOTLOG_CHATID,
-                    "#MUTE\n"
-                    f"USER: [{user.first_name}](tg://user?id={user.id})\n"
-                    f"CHAT: {spdr.chat.title}(`{spdr.chat_id}`)",
-                )
         except UserIdInvalidError:
-            return await spdr.edit("`Uh oh my mute logic broke!`")
+            return await spdr.edit("Uh oh my mute logic broke!")
+        except UserAdminInvalidError:
+            pass
+
+        # Announce that the function is done
+        if reason:
+            await spdr.edit(f"User has been muted.\nReason: {reason}")
+        else:
+            await spdr.edit("User has been muted.")
+
+        # Announce to logging group
+        if BOTLOG:
+            await spdr.client.send_message(
+                BOTLOG_CHATID,
+                "#MUTE\n"
+                f"USER: [{user.first_name}](tg://user?id={user.id})\n"
+                f"CHAT: {spdr.chat.title}(`{spdr.chat_id}`)",
+            )
 
 
 @register(outgoing=True, pattern=r"^\.unmute(?: |$)(.*)")
