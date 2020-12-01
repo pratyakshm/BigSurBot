@@ -902,6 +902,13 @@ async def Oof(e):
         await e.edit(t)
 
 
+@register(outgoing=True, pattern="^.Hmm$")
+async def Hmm(e):
+    t = "Hmm"
+    for j in range(15):
+        t = t[:-1] + "hm"
+        await e.edit(t)
+
 @register(outgoing=True, pattern="^.oof$")
 async def oof(e):
     t = "oof"
@@ -1085,6 +1092,8 @@ CMD_HELP.update(
 \n\n.Oof\
 \nUsage: Ooooof\
 \n\n.oof\
+\n\n.Hmm\
+\nUsage: Hmmmmm\
 \nUsage: ooooof\
 \n\n.hi\
 \nUsage: Greet everyone!\
