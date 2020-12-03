@@ -15,12 +15,15 @@ async def torrent(event):
     await event.edit("Searching...")
     query = event.pattern_match.group(1)
     response = requests.get(
-        f"https://sjprojectsapi.herokuapp.com/torrent/?query={query}"
-    )
-    ts = json.loads(response.text)
+        f"https://sjprojectsapi.herokuapp.com/torrent/?query={query}")
+    try:
+        ts = json.loads(response.text)
+    except json.decoder.JSONDecodeError:
+        return await event.edit(
+            "Error: API is down right now, try again later.")
     if ts != response.json():
-        await event.edit("Error: Try again later.")
-        return
+        return await event.edit(
+            "Error: API is down right now, try again later.")
     listdata = ""
     run = 0
     while True:
@@ -37,13 +40,14 @@ async def torrent(event):
         return await event.edit("Error: No results found.")
 
     await event.edit("Uploading results...")
-    tsfileloc = f"{TEMP_DOWNLOAD_DIRECTORY}/{query}.txt"
+    tsfileloc = f"{TEMP_DOWNLOAD_DIRECTORY}{query}.txt"
     with open(tsfileloc, "w+", encoding="utf8") as out_file:
         out_file.write(str(listdata))
-    caption = f"Torrents for: **{query}**"
-    await event.client.send_file(
-        event.chat_id, tsfileloc, caption=caption, force_document=False
-    )
+    caption = f"Torrents for: `{query}`"
+    await event.client.send_file(event.chat_id,
+                                 tsfileloc,
+                                 caption=caption,
+                                 force_document=False)
     os.remove(tsfileloc)
     await event.delete()
 
