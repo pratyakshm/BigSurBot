@@ -171,7 +171,7 @@ if not os.path.exists("bin"):
 binaries = {
     "https://raw.githubusercontent.com/adekmaulana/megadown/master/megadown": "bin/megadown",
     "https://raw.githubusercontent.com/yshalsager/cmrudl.py/master/cmrudl.py": "bin/cmrudl",
-    "https://raw.githubusercontent.com/adekmaulana/python-scripts/master/shell/megadirect": "bin/megadirect",
+    "https://raw.githubusercontent.com/adekmaulana/python-scripts/cd888e7/shell/megadirect": "bin/megadirect",
 }
 
 for binary, path in binaries.items():
