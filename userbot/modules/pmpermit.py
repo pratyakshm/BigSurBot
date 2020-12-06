@@ -183,8 +183,8 @@ async def notifon(non_event):
 async def approvepm(apprvpm):
     """ For .approve command, give someone the permissions to PM you. """
     try:
-        from userbot.modules.sql_helper.pm_permit_sql import approve
         from userbot.modules.sql_helper.globals import gvarstatus
+        from userbot.modules.sql_helper.pm_permit_sql import approve
     except AttributeError:
         return await apprvpm.edit("Running on Non-SQL mode!")
 

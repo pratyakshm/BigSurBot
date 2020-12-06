@@ -5,10 +5,7 @@
 #
 
 import pyfiglet
-<<<<<<< HEAD
-=======
 from emoji import get_emoji_regexp
->>>>>>> 9e478f6... bigsur treewide: remove monospaces
 
 from userbot import CMD_HELP
 from userbot.events import register
