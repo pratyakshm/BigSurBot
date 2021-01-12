@@ -63,7 +63,10 @@ async def get_user(event):
     """ Get the user from argument or replied message. """
     if event.reply_to_msg_id and not event.pattern_match.group(1):
         previous_message = await event.get_reply_message()
-        replied_user = await event.client(GetFullUserRequest(previous_message.sender_id))
+        if previous_message.from_id is None and not event.is_private:
+            return None
+        replied_user = await event.client(
+            GetFullUserRequest(previous_message.sender_id))
     else:
         user = event.pattern_match.group(1)
 
