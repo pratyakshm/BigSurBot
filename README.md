@@ -20,7 +20,7 @@ I've started this project to customize the bot according to my own needs.
 <a href="https://heroku.com/deploy?template=https://github.com/pratyakshm/bigsurbot/tree/main"><img src="https://camo.githubusercontent.com/83b0e95b38892b49184e07ad572c94c8038323fb/68747470733a2f2f7777772e6865726f6b7563646e2e636f6d2f6465706c6f792f627574746f6e2e737667" alt="Deploy to Heroku" /></a>  
 
 ### Links
-- [String Session](https://session.uraniumcore.repl.run)
+- [String Session](http://sessiongen.kenhv.repl.run/)
 - [Setup Google Drive module](https://telegra.ph/How-To-Setup-Google-Drive-04-03)
 - [Setup Last.FM module](https://telegra.ph/How-to-set-up-LastFM-module-for-Paperplane-userbot-11-02)
 
