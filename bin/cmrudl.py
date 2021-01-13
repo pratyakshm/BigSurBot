@@ -1,19 +1,19 @@
 #!/usr/bin/env python
 
-import argparse
-import collections
-import errno
-import json
-import math
 import os
-import re
 import sys
+import errno
 import time
+import math
+import collections
+import re
+import json
+import argparse
 
 try:
-    from urllib.request import HTTPError, Request, urlopen
+    from urllib.request import urlopen, Request, HTTPError
 except ImportError:
-    from urllib2 import HTTPError, Request, urlopen
+    from urllib2 import urlopen, Request, HTTPError
 
 try:
     from html.parser import HTMLParser

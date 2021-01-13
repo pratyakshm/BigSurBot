@@ -1,7 +1,6 @@
 FROM kenhv/kensurbot:alpine
 
-RUN git clone -b main https://github.com/pratyakshm/bigsurbot /root/userbot
-RUN mkdir /root/userbot/bin/
+RUN git clone -b main https://github.com/pratyakshm/BigSurBot /root/userbot
 RUN chmod 777 /root/userbot
 WORKDIR /root/userbot/
 
