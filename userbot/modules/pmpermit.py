@@ -62,9 +62,9 @@ async def permitpm(event):
                         event.chat_id, from_user="me", search=UNAPPROVED_MSG
                     ):
                         await message.delete()
-                    await event.reply(f"`{UNAPPROVED_MSG}`")
+                    await event.reply(f"{UNAPPROVED_MSG}")
             else:
-                await event.reply(f"`{UNAPPROVED_MSG}`")
+                await event.reply(f"{UNAPPROVED_MSG}")
             LASTMSG.update({event.chat_id: event.text})
             if notifsoff:
                 await event.client.send_read_acknowledge(event.chat_id)
@@ -119,8 +119,9 @@ async def auto_accept(event):
         and not (await event.get_sender()).bot
     ):
         try:
-            from userbot.modules.sql_helper.pm_permit_sql import (
-                approve, is_approved, gvarstatus)
+            from userbot.modules.sql_helper.pm_permit_sql import (approve,
+                                                                  gvarstatus,
+                                                                  is_approved)
         except AttributeError:
             return
 
@@ -162,7 +163,7 @@ async def notifoff(noff_event):
     try:
         from userbot.modules.sql_helper.globals import addgvar
     except AttributeError:
-        return await noff_event.edit("`Running on Non-SQL mode!`")
+        return await noff_event.edit("Running on Non-SQL mode!")
     addgvar("NOTIF_OFF", True)
     await noff_event.edit("Notifications from unapproved PMs are silenced!")
 
@@ -173,7 +174,7 @@ async def notifon(non_event):
     try:
         from userbot.modules.sql_helper.globals import delgvar
     except AttributeError:
-        return await non_event.edit("`Running on Non-SQL mode!`")
+        return await non_event.edit("Running on Non-SQL mode!")
     delgvar("NOTIF_OFF")
     await non_event.edit("Notifications from unapproved PMs have been unmuted!")
 
@@ -185,7 +186,7 @@ async def approvepm(apprvpm):
         from userbot.modules.sql_helper.pm_permit_sql import approve
         from userbot.modules.sql_helper.globals import gvarstatus
     except AttributeError:
-        return await apprvpm.edit("`Running on Non-SQL mode!`")
+        return await apprvpm.edit("Running on Non-SQL mode!")
 
     if apprvpm.reply_to_msg_id:
         reply = await apprvpm.get_reply_message()
@@ -229,7 +230,7 @@ async def disapprovepm(disapprvpm):
     try:
         from userbot.modules.sql_helper.pm_permit_sql import dissprove
     except BaseException:
-        return await disapprvpm.edit("`Running on Non-SQL mode!`")
+        return await disapprvpm.edit("Running on Non-SQL mode!")
 
     if disapprvpm.reply_to_msg_id:
         reply = await disapprvpm.get_reply_message()
@@ -306,14 +307,14 @@ async def unblockpm(unblock):
 async def add_pmsg(cust_msg):
     """Set your own Unapproved message"""
     if not PM_AUTO_BAN:
-        return await cust_msg.edit("You need to set `PM_AUTO_BAN` to `True`")
+        return await cust_msg.edit("You need to set PM_AUTO_BAN to True")
     try:
         import userbot.modules.sql_helper.globals as sql
     except AttributeError:
-        await cust_msg.edit("`Running on Non-SQL mode!`")
+        await cust_msg.edit("Running on Non-SQL mode!")
         return
 
-    await cust_msg.edit("`Processing...`")
+    await cust_msg.edit("Processing...")
     conf = cust_msg.pattern_match.group(1)
 
     custom_message = sql.gvarstatus("unapproved_msg")
@@ -357,27 +358,27 @@ async def add_pmsg(cust_msg):
                                 f"\n\n{custom_message}")
         else:
             await cust_msg.edit("**You haven't set a custom PMPermit message yet.**\n"
-                                f"Using default message: \n\n`{DEF_UNAPPROVED_MSG}`")
+                                f"Using default message: \n\n{DEF_UNAPPROVED_MSG}")
 
 CMD_HELP.update(
     {
-        "pmpermit": ">`.approve`"
+        "pmpermit": ">.approve"
         "\nUsage: Approves the mentioned/replied person to PM."
-        "\n\n>`.disapprove`"
+        "\n\n>.disapprove"
         "\nUsage: Disapproves the mentioned/replied person to PM."
-        "\n\n>`.block`"
+        "\n\n>.block"
         "\nUsage: Blocks the person."
-        "\n\n>`.unblock`"
+        "\n\n>.unblock"
         "\nUsage: Unblocks the person."
-        "\n\n>`.notifoff`"
+        "\n\n>.notifoff"
         "\nUsage: Turns off notifications of unapproved PMs."
-        "\n\n>`.notifon`"
+        "\n\n>.notifon"
         "\nUsage: Allows notifications for unapproved PMs."
-        "\n\n`.set pmpermit` <reply to msg>"
+        "\n\n.set pmpermit <reply to msg>"
         "\nUsage: Sets a custom PMPermit message."
-        "\n\n`.get pmpermit`"
+        "\n\n.get pmpermit"
         "\nUsage: Shows your current PMPermit message."
-        "\n\n`.reset pmpermit`"
+        "\n\n.reset pmpermit"
         "\nUsage: Resets PMPermit message to default."
     }
 )

@@ -25,14 +25,14 @@ today = date.today()
 async def _(event):
     # Prevent Channel Bug to use update
     if event.is_channel and not event.is_group:
-        await event.edit("`Compress Command isn't permitted on channels`")
+        await event.edit("Compress Command isn't permitted on channels")
         return
     if event.fwd_from:
         return
     if not event.is_reply:
-        await event.edit("`Reply to a file to compress it.`")
+        await event.edit("Reply to a file to compress it.")
         return
-    mone = await event.edit("`Processing...`")
+    mone = await event.edit("Processing...")
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
     if event.reply_to_msg_id:
@@ -48,7 +48,7 @@ async def _(event):
             )
             directory_name = downloaded_file_name
             await event.edit(
-                f"Downloaded to `{directory_name}`" "`\ncompressing file...`"
+                f"Downloaded to {directory_name}" "\ncompressing file..."
             )
         except Exception as e:  # pylint:disable=C0103,W0703
             await mone.edit(str(e))
@@ -66,7 +66,7 @@ async def _(event):
             progress(d, t, mone, c_time, "[UPLOADING]")
         ),
     )
-    await event.edit("`Done!!`")
+    await event.edit("Done!!")
     await asyncio.sleep(7)
     await event.delete()
 
@@ -76,14 +76,14 @@ async def addzip(add):
     """ Copyright (c) 2020 azrim @github"""
     # Prevent Channel Bug to use update
     if add.is_channel and not add.is_group:
-        await add.edit("`Command isn't permitted on channels`")
+        await add.edit("Command isn't permitted on channels")
         return
     if add.fwd_from:
         return
     if not add.is_reply:
-        await add.edit("`Reply to a file to compress it.`")
+        await add.edit("Reply to a file to compress it.")
         return
-    mone = await add.edit("`Processing...`")
+    mone = await add.edit("Processing...")
     if not os.path.isdir(ZIP_DOWNLOAD_DIRECTORY):
         os.makedirs(ZIP_DOWNLOAD_DIRECTORY)
     if add.reply_to_msg_id:
@@ -98,7 +98,7 @@ async def addzip(add):
                 ),
             )
             success = str(downloaded_file_name).replace("./zips/", "")
-            await add.edit(f"`{success} Successfully added to list`")
+            await add.edit(f"{success} Successfully added to list")
         except Exception as e:  # pylint:disable=C0103,W0703
             await mone.edit(str(e))
             return
@@ -107,9 +107,9 @@ async def addzip(add):
 @register(outgoing=True, pattern=r"^\.upzip(?: |$)(.*)")
 async def upload_zip(up):
     if not os.path.isdir(ZIP_DOWNLOAD_DIRECTORY):
-        await up.edit("`Files not found`")
+        await up.edit("Files not found")
         return
-    mone = await up.edit("`Zipping File...`")
+    mone = await up.edit("Zipping File...")
     input_str = up.pattern_match.group(1)
     curdate = today.strftime("%m%d%y")
     title = str(input_str) if input_str else "zipfile" + f"{curdate}"
@@ -134,10 +134,10 @@ async def upload_zip(up):
 @register(outgoing=True, pattern=r"^\.rmzip(?: |$)(.*)")
 async def remove_dir(rm):
     if not os.path.isdir(ZIP_DOWNLOAD_DIRECTORY):
-        await rm.edit("`Directory not found`")
+        await rm.edit("Directory not found")
         return
     os.rmdir(ZIP_DOWNLOAD_DIRECTORY)
-    await rm.edit("`Zip list removed`")
+    await rm.edit("Zip list removed")
 
 
 def zipdir(path, ziph):
@@ -150,13 +150,13 @@ def zipdir(path, ziph):
 
 CMD_HELP.update(
     {
-        "zipfile": "`.compress` [optional: <reply to file >]"
+        "zipfile": ".compress [optional: <reply to file >]"
         "\nUsage: make files to zip."
-        "\n\n`.addzip` <reply to file >"
+        "\n\n.addzip <reply to file >"
         "\nUsage: add files to zip list."
-        "\n\n`.upzip` [optional: <zip title>]"
+        "\n\n.upzip [optional: <zip title>]"
         "\nUsage: upload zip list."
-        "\n\n`.rmzip` [optional: <zip title>]"
+        "\n\n.rmzip [optional: <zip title>]"
         "\nUsage: clear zip list."
     }
 )

@@ -29,10 +29,10 @@ else:
 async def variable(var):
     exe = var.pattern_match.group(1)
     if app is None:
-        await var.edit("`[HEROKU]" "\nPlease setup your`  **HEROKU_APP_NAME**.")
+        await var.edit("[HEROKU]" "\nPlease setup your  **HEROKU_APP_NAME**.")
         return False
     if exe == "get":
-        await var.edit("`Getting information...`")
+        await var.edit("Getting information...")
         variable = var.pattern_match.group(2)
         if variable != "":
             if variable in heroku_var:
@@ -41,52 +41,52 @@ async def variable(var):
                         BOTLOG_CHATID,
                         "#CONFIGVAR\n\n"
                         "**ConfigVar**:\n"
-                        f"`{variable}` = `{heroku_var[variable]}`\n",
+                        f"{variable} = {heroku_var[variable]}\n",
                     )
-                    await var.edit("`Received to BOTLOG_CHATID...`")
+                    await var.edit("Received to BOTLOG_CHATID...")
                     return True
                 else:
-                    await var.edit("`Please set BOTLOG to True...`")
+                    await var.edit("Please set BOTLOG to True...")
                     return False
             else:
-                await var.edit("`Information don't exists...`")
+                await var.edit("Information don't exists...")
                 return True
         else:
             configvars = heroku_var.to_dict()
             if BOTLOG:
                 msg = ""
                 for item in configvars:
-                    msg += f"`{item}` = `{configvars[item]}`\n"
+                    msg += f"{item} = {configvars[item]}\n"
                 await var.client.send_message(
                     BOTLOG_CHATID, "#CONFIGVARS\n\n" "**ConfigVars**:\n" f"{msg}"
                 )
-                await var.edit("`Received to BOTLOG_CHATID...`")
+                await var.edit("Received to BOTLOG_CHATID...")
                 return True
             else:
-                await var.edit("`Please set BOTLOG to True...`")
+                await var.edit("Please set BOTLOG to True...")
                 return False
     elif exe == "del":
-        await var.edit("`Deleting information...`")
+        await var.edit("Deleting information...")
         variable = var.pattern_match.group(2)
         if variable == "":
-            await var.edit("`Specify ConfigVars you want to del...`")
+            await var.edit("Specify ConfigVars you want to del...")
             return False
         if variable in heroku_var:
             if BOTLOG:
                 await var.client.send_message(
                     BOTLOG_CHATID,
-                    "#DELCONFIGVAR\n\n" "**Delete ConfigVar**:\n" f"`{variable}`",
+                    "#DELCONFIGVAR\n\n" "**Delete ConfigVar**:\n" f"{variable}",
                 )
-            await var.edit("`Information deleted...`")
+            await var.edit("Information deleted...")
             del heroku_var[variable]
         else:
-            await var.edit("`Information don't exists...`")
+            await var.edit("Information don't exists...")
             return True
 
 
 @register(outgoing=True, pattern=r"^\.set var (\w*) ([\s\S]*)")
 async def set_var(var):
-    await var.edit("`Setting information...`")
+    await var.edit("Setting information...")
     variable = var.pattern_match.group(1)
     value = var.pattern_match.group(2)
     if variable in heroku_var:
@@ -95,16 +95,16 @@ async def set_var(var):
                 BOTLOG_CHATID,
                 "#SETCONFIGVAR\n\n"
                 "**Change ConfigVar**:\n"
-                f"`{variable}` = `{value}`",
+                f"{variable} = {value}",
             )
-        await var.edit("`Information sets...`")
+        await var.edit("Information sets...")
     else:
         if BOTLOG:
             await var.client.send_message(
                 BOTLOG_CHATID,
-                "#ADDCONFIGVAR\n\n" "**Add ConfigVar**:\n" f"`{variable}` = `{value}`",
+                "#ADDCONFIGVAR\n\n" "**Add ConfigVar**:\n" f"{variable} = {value}",
             )
-        await var.edit("`Information added...`")
+        await var.edit("Information added...")
     heroku_var[variable] = value
 
 
@@ -118,7 +118,7 @@ async def dyno_usage(dyno):
     """
         Get your account Dyno Usage
     """
-    await dyno.edit("`Getting Information...`")
+    await dyno.edit("Getting Information...")
     user_id = Heroku.account().id
     path = "/accounts/" + user_id + "/actions/get-quota"
     async with aiohttp.ClientSession() as session:
@@ -135,9 +135,9 @@ async def dyno_usage(dyno):
         async with session.get(heroku_api + path, headers=headers) as r:
             if r.status != 200:
                 await dyno.client.send_message(
-                    dyno.chat_id, f"`{r.reason}`", reply_to=dyno.id
+                    dyno.chat_id, f"{r.reason}", reply_to=dyno.id
                 )
-                await dyno.edit("`Can't get information...`")
+                await dyno.edit("Can't get information...")
                 return False
             result = await r.json()
             quota = result["account_quota"]
@@ -165,25 +165,25 @@ async def dyno_usage(dyno):
 
             await dyno.edit(
                 "**Dyno Usage**:\n\n"
-                f"-> `Dyno usage for`  **{app.name}**:\n"
+                f"-> Dyno usage for  **{app.name}**:\n"
                 f"     •  **{AppHours} hour(s), "
                 f"{AppMinutes} minute(s)  -  {AppPercentage}%**"
                 "\n\n"
-                "-> `Dyno hours quota remaining this month`:\n"
+                "-> Dyno hours quota remaining this month:\n"
                 f"     •  **{hours} hour(s), {minutes} minute(s)  "
                 f"-  {percentage}%**"
             )
             return True
 
 
-CMD_HELP.update({"heroku": ">.`usage`"
+CMD_HELP.update({"heroku": ">.usage"
                  "\nUsage: Check your heroku dyno hours remaining"
-                 "\n\n>`.set var <NEW VAR> <VALUE>`"
+                 "\n\n>.set var <NEW VAR> <VALUE>"
                  "\nUsage: add new variable or update existing value variable"
                  "\n!!! WARNING !!!, after setting a variable the bot will restarted"
-                 "\n\n>`.get var or .get var <VAR>`"
+                 "\n\n>.get var or .get var <VAR>"
                  "\nUsage: get your existing varibles, use it only on your private group!"
                  "\nThis returns all of your private information, please be caution..."
-                 "\n\n>`.del var <VAR>`"
+                 "\n\n>.del var <VAR>"
                  "\nUsage: delete existing variable"
                  "\n!!! WARNING !!!, after deleting variable the bot will restarted"})

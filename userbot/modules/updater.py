@@ -72,7 +72,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         heroku_app = None
         heroku_applications = heroku.apps()
         if HEROKU_APP_NAME is None:
-            await event.edit("**Please set up the** `HEROKU_APP_NAME` **variable"
+            await event.edit("**Please set up the** HEROKU_APP_NAME **variable"
                              " to be able to deploy your userbot.**")
             repo.__del__()
             return
@@ -96,11 +96,11 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         try:
             remote.push(refspec="HEAD:refs/heads/master", force=True)
         except Exception as error:
-            await event.edit(f"{txt}\nHere is the error log:\n`{error}`")
+            await event.edit(f"{txt}\nHere is the error log:\n{error}")
             return repo.__del__()
         build = app.builds(order_by="created_at", sort="desc")[0]
         if build.status == "failed":
-            await event.edit("**Build failed!**\nCancelled or there were some errors.`")
+            await event.edit("**Build failed!**\nCancelled or there were some errors.")
             await asyncio.sleep(5)
             return await event.delete()
         else:
@@ -108,7 +108,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
             
 
     else:
-        await event.edit("**Please set up** `HEROKU_API_KEY` **variable.**")
+        await event.edit("**Please set up** HEROKU_API_KEY **variable.**")
     return
 
 
@@ -134,13 +134,13 @@ async def upstream(event):
     force_update = False
     try:
         txt = "**Oops.. Updater cannot continue due to "
-        txt += "some problems**\n`LOGTRACE:`\n"
+        txt += "some problems**\nLOGTRACE:\n"
         repo = Repo()
     except NoSuchPathError as error:
-        await event.edit(f"{txt}\n**Directory** `{error}` **was not found.**")
+        await event.edit(f"{txt}\n**Directory** {error} **was not found.**")
         return repo.__del__()
     except GitCommandError as error:
-        await event.edit(f"{txt}\n**Early failure!** `{error}`")
+        await event.edit(f"{txt}\n**Early failure!** {error}")
         return repo.__del__()
     except InvalidGitRepositoryError as error:
         if conf is None:
@@ -148,7 +148,7 @@ async def upstream(event):
                 f"**Unfortunately, the directory {error} "
                 "does not seem to be a git repository.\n"
                 "But we can fix that by force updating the userbot using **"
-                "`.update now.`"
+                ".update now."
             )
         repo = Repo.init()
         origin = repo.create_remote("upstream", off_repo)
@@ -162,7 +162,7 @@ async def upstream(event):
     if ac_br != UPSTREAM_REPO_BRANCH:
         await event.edit(
             f"**Looks like you are using your own custom branch: ({ac_br}). \n"
-            "Please switch to** `main` **branch.**"
+            "Please switch to** main **branch.**"
         )
         return repo.__del__()
     try:
@@ -182,13 +182,13 @@ async def upstream(event):
         return
 
     if changelog == "" and not force_update:
-        await event.edit(f"**BigSur** is up-to-date on the `{UPSTREAM_REPO_BRANCH}` branch.")
+        await event.edit(f"**BigSur** is up-to-date on the {UPSTREAM_REPO_BRANCH} branch.")
         return repo.__del__()
 
     if conf == "" and force_update is False:
         await print_changelogs(event, ac_br, changelog)
         await event.delete()
-        return await event.respond("Do `.update now` to apply quick quality rollup or `.update deploy` to perform a full update.")
+        return await event.respond("Do .update now to apply quick quality rollup or .update deploy to perform a full update.")
 
     if force_update:
         await event.edit(
@@ -203,12 +203,12 @@ async def upstream(event):
 
 CMD_HELP.update(
     {
-        "update": ">`.update`"
+        "update": ">.update"
         "\nUsage: Checks if the main userbot repository has any updates "
         "and shows a changelog if so."
-        "\n\n>`.update now`"
+        "\n\n>.update now"
         "\nUsage: Performs a quick update."
-        "\n\n>`.update deploy`"
+        "\n\n>.update deploy"
         "\nUsage: Performs a full update (recommended)."
     }
 )

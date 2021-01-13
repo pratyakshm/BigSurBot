@@ -74,20 +74,20 @@ async def sed(command):
             to_fix = textx.text
         else:
             return await command.edit(
-                "`Master, I don't have brains. Well you too don't I guess.`"
+                "Master, I don't have brains. Well you too don't I guess."
             )
 
         repl, repl_with, flags = sed_result
 
         if not repl:
             return await command.edit(
-                "`Master, I don't have brains. Well you too don't I guess.`"
+                "Master, I don't have brains. Well you too don't I guess."
             )
 
         try:
             check = re.match(repl, to_fix, flags=re.IGNORECASE)
             if check and check.group(0).lower() == to_fix.lower():
-                return await command.edit("`Boi!, that's a reply. Don't use sed`")
+                return await command.edit("Boi!, that's a reply. Don't use sed")
 
             if "i" in flags and "g" in flags:
                 text = re.sub(repl, repl_with, to_fix, flags=re.I).strip()
@@ -110,8 +110,8 @@ async def sed(command):
 
 CMD_HELP.update(
     {
-        "sed": ">`.s<delimiter><old word(s)><delimiter><new word(s)>`"
+        "sed": ">.s<delimiter><old word(s)><delimiter><new word(s)>"
         "\nUsage: Replaces a word or words using sed."
-        "\nDelimiters: `/, :, |, _`"
+        "\nDelimiters: /, :, |, _"
     }
 )

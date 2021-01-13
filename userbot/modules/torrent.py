@@ -43,7 +43,7 @@ async def torrent(event):
     tsfileloc = f"{TEMP_DOWNLOAD_DIRECTORY}{query}.txt"
     with open(tsfileloc, "w+", encoding="utf8") as out_file:
         out_file.write(str(listdata))
-    caption = f"Torrents for: `{query}`"
+    caption = f"Torrents for: {query}"
     await event.client.send_file(event.chat_id,
                                  tsfileloc,
                                  caption=caption,
@@ -53,5 +53,5 @@ async def torrent(event):
 
 
 CMD_HELP.update(
-    {"torrent": ">`.ts` <query>" "\nUsage: Search for torrents of given query"}
+    {"torrent": ">.ts <query>" "\nUsage: Search for torrents of given query"}
 )

@@ -73,7 +73,7 @@ async def add_new_filter(new_handler):
     elif new_handler.reply_to_msg_id and not string:
         rep_msg = await new_handler.get_reply_message()
         string = rep_msg.text
-    success = "Filter `{}` {} successfully."
+    success = "Filter {} {} successfully."
     if add_filter(str(new_handler.chat_id), keyword, string, msg_id) is True:
         await new_handler.edit(success.format(keyword, "set"))
     else:
@@ -89,9 +89,9 @@ async def remove_a_filter(r_handler):
         return await r_handler.edit("Running on Non-SQL mode!")
     filt = r_handler.pattern_match.group(1)
     if not remove_filter(r_handler.chat_id, filt):
-        await r_handler.edit("Filter `{}` doesn't exist.".format(filt))
+        await r_handler.edit("Filter {} doesn't exist.".format(filt))
     else:
-        await r_handler.edit("Filter `{}` was deleted successfully.".format(filt))
+        await r_handler.edit("Filter {} was deleted successfully.".format(filt))
 
 
 @register(outgoing=True, pattern=r"^\.rmbotfilters (.*)")
@@ -109,7 +109,7 @@ async def kick_marie_filter(event):
         if bot_type.lower() == "marie":
             await event.reply("/stop %s" % (i.strip()))
         if bot_type.lower() == "rose":
-            i = i.replace("`", "")
+            i = i.replace("", "")
             await event.reply("/stop %s" % (i.strip()))
         await sleep(0.3)
     await event.respond("Successfully purged bots filters.")
@@ -131,21 +131,21 @@ async def filters_active(event):
     for filt in filters:
         if transact == "There are no filters in this chat.":
             transact = "Active filters in this chat:\n"
-        transact += "`{}`\n".format(filt.keyword)
+        transact += "{}\n".format(filt.keyword)
     await event.edit(transact)
 
 
 CMD_HELP.update(
     {
-        "filter": ">`.filters`"
+        "filter": ">.filters"
         "\nUsage: Lists all active userbot filters in a chat."
-        "\n\n>`.filter <keyword> <reply text>` or reply to a message with >`.filter <keyword>`"
+        "\n\n>.filter <keyword> <reply text> or reply to a message with >.filter <keyword>"
         "\nUsage: Saves the replied message as a reply to the 'keyword'."
         "\nThe bot will reply to the message whenever 'keyword' is mentioned."
         "\nWorks with everything from files to stickers."
-        "\n\n>`.stop <filter>`"
+        "\n\n>.stop <filter>"
         "\nUsage: Stops the specified filter."
-        "\n\n>`.rmbotfilters <marie/rose>`"
+        "\n\n>.rmbotfilters <marie/rose>"
         "\nUsage: Removes all filters of admin bots (Currently supported: Marie, Rose and their clones.) in the chat."
     }
 )

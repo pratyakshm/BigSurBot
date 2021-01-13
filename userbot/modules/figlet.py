@@ -5,6 +5,10 @@
 #
 
 import pyfiglet
+<<<<<<< HEAD
+=======
+from emoji import get_emoji_regexp
+>>>>>>> 9e478f6... bigsur treewide: remove monospaces
 
 from userbot import CMD_HELP
 from userbot.events import register
@@ -36,26 +40,26 @@ async def figlet(e):
         cmd = None
         text = input_str
     else:
-        await e.edit("`Please add some text to figlet`")
+        await e.edit("Please add some text to figlet")
         return
     if cmd is not None:
         try:
             font = CMD_FIG[cmd]
         except KeyError:
-            await e.edit("`Invalid selected font.`")
+            await e.edit("Invalid selected font.")
             return
         result = pyfiglet.figlet_format(text, font=font)
     else:
         result = pyfiglet.figlet_format(text)
-    await e.respond("‌‌‎`{}`".format(result))
+    await e.respond("‌‌‎{}".format(result))
     await e.delete()
 
 
 CMD_HELP.update(
     {
-        "figlet": ">`.figlet`"
+        "figlet": ">.figlet"
         "\nUsage: Enhance ur text to strip line with anvil."
-        "\n\nExample: `.figlet TEXT.STYLE`"
-        "\nSTYLE LIST: `slant`, `3D`, `5line`, `alpha`, `banner`, `doh`, `iso`, `letter`, `allig`, `dotm`, `bubble`, `bulb`, `digi`"
+        "\n\nExample: .figlet TEXT.STYLE"
+        "\nSTYLE LIST: slant, 3D, 5line, alpha, banner, doh, iso, letter, allig, dotm, bubble, bulb, digi"
     }
 )

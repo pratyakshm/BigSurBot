@@ -13,7 +13,7 @@ from userbot.events import register
           pattern=r"^\.web ?(.+?|) (anonfiles|transfer|filebin|anonymousfiles|megaupload|bayfiles|letsupload|0x0)",
           )
 async def _(event):
-    await event.edit("`Processing ...`")
+    await event.edit("Processing ...")
     input_str = event.pattern_match.group(1)
     selected_transfer = event.pattern_match.group(2)
     if input_str:
@@ -40,7 +40,7 @@ async def _(event):
             full_file_path=file_name, bare_local_name=filename
         )
     except KeyError:
-        await event.edit("`Invalid selected Transfer.`")
+        await event.edit("Invalid selected Transfer.")
         return
     cmd = selected_one
     # start the subprocess $SHELL
@@ -53,7 +53,7 @@ async def _(event):
     t_response = stdout.decode().strip()
     # logger.info(t_response)
     """if e_response:
-		await event.edit(f"**FAILED** to __transload__: `{e_response}`")
+		await event.edit(f"**FAILED** to __transload__: {e_response}")
 		return"""
     if t_response:
         try:
@@ -67,6 +67,6 @@ async def _(event):
         await event.edit(t_response)
 
 
-CMD_HELP.update({"webupload": ">`.web` <server>"
+CMD_HELP.update({"webupload": ">.web <server>"
                  "\nServer List: anonfiles|transfer|filebin|anonymousfiles|megaupload|bayfiles|lestupload|0x0"
                  "\nUsage: Reply to a file to upload it to one of the above servers."})

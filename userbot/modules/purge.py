@@ -61,7 +61,7 @@ async def purgeme(delme):
         await message.delete()
 
     smsg = await delme.client.send_message(
-        delme.chat_id, "`Purge complete!` Purged " + str(count) + " messages.",
+        delme.chat_id, "Purge complete! Purged " + str(count) + " messages.",
     )
     """
     if BOTLOG:
@@ -134,15 +134,15 @@ async def selfdestruct(destroy):
     """
 
 
-CMD_HELP.update({"purge": ">`.purge`"
+CMD_HELP.update({"purge": ">.purge"
                  "\nUsage: Purges all messages starting from the reply.",
-                 "purgeme": ">`.purgeme <x>`"
+                 "purgeme": ">.purgeme <x>"
                  "\nUsage: Deletes x amount of your latest messages.",
-                 "del": ">`.del`"
+                 "del": ">.del"
                  "\nUsage: Deletes the message you replied to.",
-                 "edit": ">`.edit <newmessage>`"
+                 "edit": ">.edit <newmessage>"
                  "\nUsage: Replace your last message with <newmessage>.",
-                 "sd": ">`.sd <x> <message>`"
+                 "sd": ">.sd <x> <message>"
                  "\nUsage: Creates a message that selfdestructs in x seconds."
                  "\nKeep the seconds under 100 since it puts your bot to sleep.",
                  })

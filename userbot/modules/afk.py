@@ -141,13 +141,13 @@ async def type_afk_is_not_true(notafk):
                     await notafk.client.send_message(
                         BOTLOG_CHATID,
                         "[" + name0 + "](tg://user?id=" + str(i) + ")" +
-                        " sent you " + "`" + str(USERS[i]) + " message(s)`",
+                        " sent you " + "" + str(USERS[i]) + " message(s)",
                     )
                 else:  # anon admin
                     await notafk.client.send_message(
                         BOTLOG_CHATID,
-                        "Anonymous admin in `" + i + "` sent you " + "`" +
-                        str(USERS[i]) + " message(s)`",
+                        "Anonymous admin in " + i + " sent you " + "" +
+                        str(USERS[i]) + " message(s)",
                     )
         COUNT_MSG = 0
         USERS = {}
@@ -156,7 +156,7 @@ async def type_afk_is_not_true(notafk):
 
 CMD_HELP.update(
     {
-        "afk": ">`.afk [Optional Reason]`"
+        "afk": ">.afk [Optional Reason]"
         "\nUsage: Sets you as afk.\nReplies to anyone who tags/PM's "
         "you telling them that you are AFK(reason)."
         "\n\nSwitches off AFK when you type back anything, anywhere."

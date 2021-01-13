@@ -39,14 +39,14 @@ async def okgoogle(img):
         photo = io.BytesIO()
         await bot.download_media(message, photo)
     else:
-        return await img.edit("`Reply to photo or sticker nigger.`")
+        return await img.edit("Reply to photo or sticker nigger.")
 
     if photo:
-        await img.edit("`Processing...`")
+        await img.edit("Processing...")
         try:
             image = Image.open(photo)
         except OSError:
-            return await img.edit("`Unsupported sexuality, most likely.`")
+            return await img.edit("Unsupported sexuality, most likely.")
         name = "okgoogle.png"
         image.save(name, "PNG")
         image.close()
@@ -67,11 +67,11 @@ async def okgoogle(img):
 
         if response != 400:
             await img.edit(
-                "`Image successfully uploaded to Google. Maybe.`"
-                "\n`Parsing source now. Maybe.`"
+                "Image successfully uploaded to Google. Maybe."
+                "\nParsing source now. Maybe."
             )
         else:
-            return await img.edit("`Google told me to fuck off.`")
+            return await img.edit("Google told me to fuck off.")
 
         os.remove(name)
         match = await ParseSauce(fetchUrl + "&preferences?hl=en&fg=1#languages")
@@ -79,9 +79,9 @@ async def okgoogle(img):
         imgspage = match["similar_images"]
 
         if guess and imgspage:
-            await img.edit(f"[{guess}]({fetchUrl})\n\n`Looking for images...`")
+            await img.edit(f"[{guess}]({fetchUrl})\n\nLooking for images...")
         else:
-            return await img.edit("`Couldn't find anything for your uglyass.`")
+            return await img.edit("Couldn't find anything for your uglyass.")
 
         lim = img.pattern_match.group(1) if img.pattern_match.group(1) else 3
         images = await scam(match, lim)
@@ -145,5 +145,5 @@ async def scam(results, lim):
     return imglinks
 
 
-CMD_HELP.update({"reverse": ">`.reverse`"
+CMD_HELP.update({"reverse": ">.reverse"
                  "\nUsage: Reply to a pic/sticker to revers-search it on Google Images !!"})

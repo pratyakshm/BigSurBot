@@ -21,16 +21,16 @@ from userbot import (BIO_PREFIX, BOTLOG, BOTLOG_CHATID, CMD_HELP, DEFAULT_BIO,
 from userbot.events import register
 
 # =================== CONSTANT ===================
-LFM_BIO_ENABLED = "```last.fm current music to bio is now enabled.```"
+LFM_BIO_ENABLED = "last.fm current music to bio is now enabled."
 LFM_BIO_DISABLED = (
-    "```last.fm current music to bio is now disabled. Bio reverted to default.```"
+    "last.fm current music to bio is now disabled. Bio reverted to default."
 )
-LFM_BIO_RUNNING = "```last.fm current music to bio is already running.```"
-LFM_BIO_ERR = "```No option specified.```"
-LFM_LOG_ENABLED = "```last.fm logging to bot log is now enabled.```"
-LFM_LOG_DISABLED = "```last.fm logging to bot log is now disabled.```"
-LFM_LOG_ERR = "```No option specified.```"
-ERROR_MSG = "```last.fm module halted, got an unexpected error.```"
+LFM_BIO_RUNNING = "last.fm current music to bio is already running."
+LFM_BIO_ERR = "No option specified."
+LFM_LOG_ENABLED = "last.fm logging to bot log is now enabled."
+LFM_LOG_DISABLED = "last.fm logging to bot log is now disabled."
+LFM_LOG_ERR = "No option specified."
+ERROR_MSG = "last.fm module halted, got an unexpected error."
 
 ARTIST = 0
 SONG = 0
@@ -46,7 +46,7 @@ LastLog = False
 @register(outgoing=True, pattern=r"^\.lastfm$")
 async def last_fm(lastFM):
     """ For .lastfm command, fetch scrobble data from last.fm. """
-    await lastFM.edit("`Processing...`")
+    await lastFM.edit("Processing...")
     preview = None
     playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
     username = f"https://www.last.fm/user/{LASTFM_USERNAME}"
@@ -60,18 +60,18 @@ async def last_fm(lastFM):
         try:
             tags = await gettags(isNowPlaying=True, playing=playing)
         except WSError as err:
-            return await lastFM.edit(f"`{err}`")
+            return await lastFM.edit(f"{err}")
         rectrack = parse.quote(f"{playing}")
         rectrack = sub("^", "https://open.spotify.com/search/", rectrack)
         if image:
             output = (
                 f"[‎]({image})[{LASTFM_USERNAME}]({username}) __is now listening to:"
-                f"__\n\n• [{playing}]({rectrack})\n`{tags}`")
+                f"__\n\n• [{playing}]({rectrack})\n{tags}")
             preview = True
         else:
             output = (
                 f"[{LASTFM_USERNAME}]({username}) __is now listening to:"
-                f"__\n\n• [{playing}]({rectrack})\n`{tags}`"
+                f"__\n\n• [{playing}]({rectrack})\n{tags}"
             )
     else:
         recent = User(LASTFM_USERNAME, lastfm).get_recent_tracks(limit=5)
@@ -83,12 +83,12 @@ async def last_fm(lastFM):
             try:
                 tags = await gettags(track)
             except WSError as err:
-                return await lastFM.edit(f"`{err}`")
+                return await lastFM.edit(f"{err}")
             rectrack = parse.quote(str(printable))
             rectrack = sub("^", "https://open.spotify.com/search/", rectrack)
             output += f"• [{printable}]({rectrack})\n"
             if tags:
-                output += f"`{tags}`\n\n"
+                output += f"{tags}\n\n"
     if preview is not None:
         await lastFM.edit(f"{output}", parse_mode="md", link_preview=True)
     else:
@@ -220,9 +220,9 @@ async def lastlog(lstlog):
         await lstlog.edit(LFM_LOG_ERR)
 
 
-CMD_HELP.update({"lastfm": ">`.lastfm`"
+CMD_HELP.update({"lastfm": ">.lastfm"
                  "\nUsage: Shows currently scrobbling track or most recent scrobbles if nothing is playing."
-                 "\n\n>`.lastbio <on/off>`"
+                 "\n\n>.lastbio <on/off>"
                  "\nUsage: Enables/Disables last.fm current playing to bio."
-                 "\n\n>`.lastlog <on/off>`"
+                 "\n\n>.lastlog <on/off>"
                  "\nUsage: Enable/Disable last.fm bio logging in the bot-log group."})

@@ -34,9 +34,9 @@ async def sysdetails(sysd):
             result = str(stdout.decode().strip()) + \
                 str(stderr.decode().strip())
 
-            await sysd.edit("`" + result + "`")
+            await sysd.edit("" + result + "")
         except FileNotFoundError:
-            await sysd.edit("`Install neofetch first!`")
+            await sysd.edit("Install neofetch first!")
 
 
 @register(outgoing=True, pattern=r"^\.botver$")
@@ -58,11 +58,11 @@ async def bot_ver(event):
         revout = str(stdout.decode().strip()) + str(stderr.decode().strip())
 
         await event.edit(
-            "`"
+            ""
             f"Userbot  : {verout}\n"
             f"Revision : {revout}\n"
             f"Telethon : {version.__version__}\n"
-            "`"
+            ""
         )
     else:
         await event.edit(
@@ -77,7 +77,7 @@ async def pipcheck(pip):
         return
     pipmodule = pip.pattern_match.group(1)
     if pipmodule:
-        await pip.edit("`Searching . . .`")
+        await pip.edit("Searching . . .")
         pipc = await asyncrunapp(
             "pip3", "search", pipmodule, stdout=asyncPIPE, stderr=asyncPIPE,
         )
@@ -87,7 +87,7 @@ async def pipcheck(pip):
 
         if pipout:
             if len(pipout) > 4096:
-                await pip.edit("`Output too large, sending as file`")
+                await pip.edit("Output too large, sending as file")
                 file = open("output.txt", "w+")
                 file.write(pipout)
                 file.close()
@@ -97,20 +97,20 @@ async def pipcheck(pip):
                 remove("output.txt")
                 return
             await pip.edit(
-                "**Query: **\n`"
+                "**Query: **\n"
                 f"pip3 search {pipmodule}"
-                "`\n**Result: **\n`"
+                "\n**Result: **\n"
                 f"{pipout}"
-                "`"
+                ""
             )
         else:
             await pip.edit(
-                "**Query: **\n`"
+                "**Query: **\n"
                 f"pip3 search {pipmodule}"
-                "`\n**Result: **\n`No Result Returned/False`"
+                "\n**Result: **\nNo Result Returned/False"
             )
     else:
-        await pip.edit("`Use .help pip to see an example`")
+        await pip.edit("Use .help pip to see an example")
 
 
 @register(outgoing=True, pattern=r"^\.alive$")
@@ -134,7 +134,7 @@ async def amireallyaliveuser(username):
         global DEFAULTUSER
         DEFAULTUSER = newuser
         output = "Successfully changed user to " + newuser + "!"
-    await username.edit("`" f"{output}" "`")
+    await username.edit("" f"{output}" "")
 
 
 @register(outgoing=True, pattern=r"^\.resetalive$")
@@ -142,19 +142,19 @@ async def amireallyalivereset(ureset):
     """ For .resetalive command, reset the username in the .alive command. """
     global DEFAULTUSER
     DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
-    await ureset.edit("`" "Successfully reset user for alive!" "`")
+    await ureset.edit("" "Successfully reset user for alive!" "")
 
 
-CMD_HELP.update({"sysd": ">`.sysd`"
+CMD_HELP.update({"sysd": ">.sysd"
                  "\nUsage: Shows system information using neofetch.",
-                 "botver": ">`.botver`"
+                 "botver": ">.botver"
                  "\nUsage: Shows the userbot version.",
-                 "pip": ">`.pip <module(s)>`"
+                 "pip": ">.pip <module(s)>"
                  "\nUsage: Does a search of pip modules(s).",
-                 "alive": ">`.alive`"
+                 "alive": ">.alive"
                  "\nUsage: Type .alive to see wether your bot is working or not."
-                 "\n\n>`.aliveu <text>`"
+                 "\n\n>.aliveu <text>"
                  "\nUsage: Changes the 'user' in alive to the text you want."
-                 "\n\n>`.resetalive`"
+                 "\n\n>.resetalive"
                  "\nUsage: Resets the user to default.",
                  })

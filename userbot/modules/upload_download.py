@@ -58,7 +58,7 @@ async def download(target_file):
             diff = now - c_time
             percentage = downloader.get_progress() * 100
             speed = downloader.get_speed()
-            progress_str = "[{0}{1}] `{2}%`".format(
+            progress_str = "[{0}{1}] {2}%".format(
                 "".join(["●" for i in range(math.floor(percentage / 10))]),
                 "".join(["○" for i in range(10 - math.floor(percentage / 10))]),
                 round(percentage, 2),
@@ -66,12 +66,12 @@ async def download(target_file):
             estimated_total_time = downloader.get_eta(human=True)
             try:
                 current_message = (
-                    f"`Name` : `{file_name}`\n"
+                    f"Name : {file_name}\n"
                     "Status"
                     f"\n**{status}**... | {progress_str}"
                     f"\n{humanbytes(downloaded)} of {humanbytes(total_length)}"
                     f" @ {speed}"
-                    f"\n`ETA` -> {estimated_total_time}"
+                    f"\nETA -> {estimated_total_time}"
                 )
 
                 if round(
@@ -83,7 +83,7 @@ async def download(target_file):
                 LOGS.info(str(e))
         if downloader.isSuccessful():
             await target_file.edit(
-                "Downloaded to `{}` successfully !!".format(downloaded_file_name)
+                "Downloaded to {} successfully !!".format(downloaded_file_name)
             )
         else:
             await target_file.edit("Incorrect URL\n{}".format(url))
@@ -101,7 +101,7 @@ async def download(target_file):
             await target_file.edit(str(e))
         else:
             await target_file.edit(
-                "Downloaded to `{}` successfully !!".format(downloaded_file_name)
+                "Downloaded to {} successfully !!".format(downloaded_file_name)
             )
     else:
         await target_file.edit("Reply to a message to download to my local server.")
@@ -190,7 +190,7 @@ async def upload(u_event):
     await u_event.edit("Processing ...")
     input_str = u_event.pattern_match.group(1)
     if input_str in ("userbot.session", "config.env"):
-        return await u_event.edit("`That's a dangerous operation! Not Permitted!`")
+        return await u_event.edit("That's a dangerous operation! Not Permitted!")
     if os.path.exists(input_str):
         c_time = time.time()
         await u_event.client.send_file(
@@ -352,9 +352,9 @@ async def uploadas(uas_event):
 
 CMD_HELP.update(
     {
-        "download": ">`.download <link|filename> or reply to media`"
+        "download": ">.download <link|filename> or reply to media"
         "\nUsage: Downloads file to the server."
-        "\n\n>`.upload <path in server>`"
+        "\n\n>.upload <path in server>"
         "\nUsage: Uploads a locally stored file to the chat."
     }
 )

@@ -19,7 +19,7 @@ async def github(event):
     async with aiohttp.ClientSession() as session:
         async with session.get(URL) as request:
             if request.status == 404:
-                await event.reply("`" + event.pattern_match.group(1) + " not found`")
+                await event.reply("" + event.pattern_match.group(1) + " not found")
                 return
 
             result = await request.json()
@@ -30,12 +30,12 @@ async def github(event):
             bio = result.get("bio", None)
             created_at = result.get("created_at", "Not Found")
 
-            REPLY = f"GitHub Info for `{event.pattern_match.group(1)}`\
-            \nUsername: `{name}`\
-            \nBio: `{bio}`\
+            REPLY = f"GitHub Info for {event.pattern_match.group(1)}\
+            \nUsername: {name}\
+            \nBio: {bio}\
             \nURL: {url}\
-            \nCompany: `{company}`\
-            \nCreated at: `{created_at}`\
+            \nCompany: {company}\
+            \nCreated at: {created_at}\
             \nMore info : [Here](https://api.github.com/users/{event.pattern_match.group(1)}/events/public)"
 
             if not result.get("repos_url", None):
@@ -58,4 +58,4 @@ async def github(event):
 
 
 CMD_HELP.update(
-    {"github": "`.git`" "\nUsage: Like .whois but for GitHub usernames."})
+    {"github": ".git" "\nUsage: Like .whois but for GitHub usernames."})

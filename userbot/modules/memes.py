@@ -239,7 +239,7 @@ INSULT_STRINGS = [
 ]
 
 UWUS = [
-    "(・`ω´・)",
+    "(・ω´・)",
     ";;w;;",
     "owo",
     "UwU",
@@ -287,7 +287,7 @@ FACEREACTS = [
     "[¬º-°]¬",
     "(Ծ‸ Ծ)",
     "(•̀ᴗ•́)و ̑̑",
-    "ヾ(´〇`)ﾉ♪♪♪",
+    "ヾ(´〇)ﾉ♪♪♪",
     "(ง'̀-'́)ง",
     "ლ(•́•́ლ)",
     "ʕ •́؈•̀ ₎",
@@ -322,7 +322,7 @@ FACEREACTS = [
     "(⊙_◎)",
     "¿ⓧ_ⓧﮌ",
     "ಠ_ಠ",
-    "(´･_･`)",
+    "(´･_･)",
     "ᕦ(ò_óˇ)ᕤ",
     "⊙﹏⊙",
     "(╯°□°）╯︵ ┻━┻",
@@ -338,19 +338,19 @@ FACEREACTS = [
     "ಥ﹏ಥ",
     "（ ^_^）o自自o（^_^ ）",
     "ಠ‿ಠ",
-    "ヽ(´▽`)/",
+    "ヽ(´▽)/",
     "ᵒᴥᵒ#",
     "( ͡° ͜ʖ ͡°)",
     "┬─┬﻿ ノ( ゜-゜ノ)",
     "ヽ(´ー｀)ノ",
     "☜(⌒▽⌒)☞",
-    "ε=ε=ε=┌(;*´Д`)ﾉ",
+    "ε=ε=ε=┌(;*´Д)ﾉ",
     "(╬ ಠ益ಠ)",
     "┬─┬⃰͡ (ᵔᵕᵔ͜ )",
-    "┻━┻ ︵ヽ(`Д´)ﾉ︵﻿ ┻━┻",
+    "┻━┻ ︵ヽ(Д´)ﾉ︵﻿ ┻━┻",
     r"¯\_(ツ)_/¯",
     "ʕᵔᴥᵔʔ",
-    "(`･ω･´)",
+    "(･ω･´)",
     "ʕ•ᴥ•ʔ",
     "ლ(｀ー´ლ)",
     "ʕʘ̅͜ʘ̅ʔ",
@@ -462,12 +462,12 @@ SHGS = [
     "┐(￣ヘ￣)┌",
     "╮(╯∀╰)╭",
     "╮(╯_╰)╭",
-    "┐(´д`)┌",
+    "┐(´д)┌",
     "┐(´∀｀)┌",
     "ʅ(́◡◝)ʃ",
     "┐(ﾟ～ﾟ)┌",
     "┐('д')┌",
-    "┐(‘～`;)┌",
+    "┐(‘～;)┌",
     "ヘ(´－｀;)ヘ",
     "┐( -“-)┌",
     "ʅ（´◔౪◔）ʃ",
@@ -509,7 +509,7 @@ CRI = [
     "(ಥ_ʖಥ)",
     "(つд⊂)",
     "(≖͞_≖̥)",
-    "(இ﹏இ`｡)",
+    "(இ﹏இ｡)",
     "༼ಢ_ಢ༽",
     "༼ ༎ຶ ෴ ༎ຶ༽",
 ]
@@ -624,7 +624,7 @@ async def univsaye(cowmsg):
     cheese = cow.get_cow(arg)
     cheese = cheese()
 
-    await cowmsg.edit(f"`{cheese.milk(text).replace('`', '´')}`")
+    await cowmsg.edit(f"{cheese.milk(text).replace('', '´')}")
 
 
 @register(outgoing=True, pattern=r"^\.coinflip(?: |$)(.*)")
@@ -664,7 +664,7 @@ async def who(event):
 
     except BaseException:
         await event.edit(
-            "`Can't slap this person, need to fetch some sticks and stones !!`"
+            "Can't slap this person, need to fetch some sticks and stones !!"
         )
 
 
@@ -729,7 +729,7 @@ async def copypasta(cp_e):
     elif textx:
         message = textx.text
     else:
-        await cp_e.edit("`😂🅱️IvE👐sOME👅text👅for✌️Me👌tO👐MAkE👀iT💞funNy!💦`")
+        await cp_e.edit("😂🅱️IvE👐sOME👅text👅for✌️Me👌tO👐MAkE👀iT💞funNy!💦")
         return
 
     reply_text = choice(EMOJIS)
@@ -763,7 +763,7 @@ async def vapor(vpr):
     elif textx:
         message = textx.text
     else:
-        await vpr.edit("`Ｇｉｖｅ ｓｏｍｅ ｔｅｘｔ ｆｏｒ ｖａｐｏｒ！`")
+        await vpr.edit("Ｇｉｖｅ ｓｏｍｅ ｔｅｘｔ ｆｏｒ ｖａｐｏｒ！")
         return
 
     for charac in message:
@@ -788,7 +788,7 @@ async def stretch(stret):
     elif textx:
         message = textx.text
     else:
-        await stret.edit("`GiiiiiiiB sooooooomeeeeeee teeeeeeext!`")
+        await stret.edit("GiiiiiiiB sooooooomeeeeeee teeeeeeext!")
         return
 
     count = randint(3, 10)
@@ -811,7 +811,7 @@ async def zal(zgfy):
         message = textx.text
     else:
         await zgfy.edit(
-            "`gͫ ̆ i̛ ̺ v͇̆ ȅͅ   a̢ͦ   s̴̪ c̸̢ ä̸ rͩͣ y͖͞   t̨͚ é̠ x̢͖  t͔͛`"
+            "gͫ ̆ i̛ ̺ v͇̆ ȅͅ   a̢ͦ   s̴̪ c̸̢ ä̸ rͩͣ y͖͞   t̨͚ é̠ x̢͖  t͔͛"
         )
         return
 
@@ -851,7 +851,7 @@ async def faces(owo):
     elif textx:
         message = textx.text
     else:
-        await owo.edit("` UwU no text given! `")
+        await owo.edit(" UwU no text given! ")
         return
 
     reply_text = sub(r"(r|l)", "w", message)
@@ -921,7 +921,7 @@ async def spongemocktext(mock):
     elif textx:
         message = textx.text
     else:
-        await mock.edit("`gIvE sOMEtHInG tO MoCk!`")
+        await mock.edit("gIvE sOMEtHInG tO MoCk!")
         return
 
     for charac in message:
@@ -944,7 +944,7 @@ async def claptext(memereview):
     elif textx:
         message = textx.text
     else:
-        await memereview.edit("`Hah, I don't clap pointlessly!`")
+        await memereview.edit("Hah, I don't clap pointlessly!")
         return
     reply_text = "👏 "
     reply_text += message.replace(" ", " 👏 ")
@@ -1033,7 +1033,7 @@ async def scam(event):
         scam_action = str(args[0]).lower()
         scam_time = int(args[1])
     else:
-        await event.edit("`Invalid Syntax !!`")
+        await event.edit("Invalid Syntax !!")
         return
     try:
         if scam_time > 0:
@@ -1054,7 +1054,7 @@ async def typewriter(typew):
     elif textx:
         message = textx.text
     else:
-        await typew.edit("`Give a text to type!`")
+        await typew.edit("Give a text to type!")
         return
     sleep_time = 0.03
     typing_symbol = "|"

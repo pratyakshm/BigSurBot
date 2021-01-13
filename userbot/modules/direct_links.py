@@ -30,9 +30,9 @@ async def subprocess_run(cmd):
     if exitCode != 0:
         reply += (
             '**An error was detected while running subprocess.**\n'
-            f'exitCode : `{exitCode}`\n'
-            f'stdout : `{result[0].decode().strip()}`\n'
-            f'stderr : `{result[1].decode().strip()}`')
+            f'exitCode : {exitCode}\n'
+            f'stdout : {result[0].decode().strip()}\n'
+            f'stderr : {result[1].decode().strip()}')
         return reply
     return result
 
@@ -40,7 +40,7 @@ async def subprocess_run(cmd):
 @register(outgoing=True, pattern=r"^.direct(?: |$)([\s\S]*)")
 async def direct_link_generator(request):
     """ direct links generator """
-    await request.edit("`Processing...`")
+    await request.edit("Processing...")
     textx = await request.get_reply_message()
     message = request.pattern_match.group(1)
     if message:
@@ -48,12 +48,12 @@ async def direct_link_generator(request):
     elif textx:
         message = textx.text
     else:
-        await request.edit("`Usage: .direct <url>`")
+        await request.edit("Usage: .direct <url>")
         return
     reply = ''
     links = re.findall(r'\bhttps?://.*\.\S+', message)
     if not links:
-        reply = "`No links found!`"
+        reply = "No links found!"
         await request.edit(reply)
     for link in links:
         if 'zippyshare.com' in link:
@@ -89,7 +89,7 @@ async def zippy_share(url: str) -> str:
     try:
         link = re.findall(r'\bhttps?://.*zippyshare\.com\S+', url)[0]
     except IndexError:
-        reply = "`No ZippyShare links found`\n"
+        reply = "No ZippyShare links found\n"
         return reply
     session = requests.Session()
     base_url = re.search('http.+.com', link).group()
@@ -117,7 +117,7 @@ async def yandex_disk(url: str) -> str:
     try:
         link = re.findall(r'\bhttps?://.*yadi\.sk\S+', url)[0]
     except IndexError:
-        reply = "`No Yandex.Disk links found`\n"
+        reply = "No Yandex.Disk links found\n"
         return reply
     api = 'https://cloud-api.yandex.net/v1/disk/public/resources/download?public_key={}'
     try:
@@ -125,7 +125,7 @@ async def yandex_disk(url: str) -> str:
         name = dl_url.split('filename=')[1].split('&disposition')[0]
         reply += f'[{name}]({dl_url})\n'
     except KeyError:
-        reply += '`Error: File not found / Download limit reached`\n'
+        reply += 'Error: File not found / Download limit reached\n'
         return reply
     return reply
 
@@ -137,7 +137,7 @@ async def cm_ru(url: str) -> str:
     try:
         link = re.findall(r'\bhttps?://.*cloud\.mail\.ru\S+', url)[0]
     except IndexError:
-        reply = "`No cloud.mail.ru links found`\n"
+        reply = "No cloud.mail.ru links found\n"
         return reply
     cmd = f'bin/cmrudl -s {link}'
     result = subprocess_run(cmd)
@@ -145,7 +145,7 @@ async def cm_ru(url: str) -> str:
         result = result[0].splitlines()[-1]
         data = json.loads(result)
     except json.decoder.JSONDecodeError:
-        reply += "`Error: Can't extract the link`\n"
+        reply += "Error: Can't extract the link\n"
         return reply
     except IndexError:
         return reply
@@ -161,7 +161,7 @@ async def mediafire(url: str) -> str:
     try:
         link = re.findall(r'\bhttps?://.*mediafire\.com\S+', url)[0]
     except IndexError:
-        reply = "`No MediaFire links found`\n"
+        reply = "No MediaFire links found\n"
         return reply
     reply = ''
     page = BeautifulSoup(requests.get(link).content, 'lxml')
@@ -178,7 +178,7 @@ async def sourceforge(url: str) -> str:
     try:
         link = re.findall(r'\bhttps?://.*sourceforge\.net\S+', url)[0]
     except IndexError:
-        reply = "`No SourceForge links found`\n"
+        reply = "No SourceForge links found\n"
         return reply
     file_path = re.findall(r'files(.*)/download', link)[0]
     reply = f"Mirrors for __{file_path.split('/')[-1]}__\n"
@@ -200,7 +200,7 @@ async def osdn(url: str) -> str:
     try:
         link = re.findall(r'\bhttps?://.*osdn\.net\S+', url)[0]
     except IndexError:
-        reply = "`No OSDN links found`\n"
+        reply = "No OSDN links found\n"
         return reply
     page = BeautifulSoup(
         requests.get(link, allow_redirects=True).content, 'lxml')
@@ -221,7 +221,7 @@ async def github(url: str) -> str:
     try:
         link = re.findall(r'\bhttps?://.*github\.com.*releases\S+', url)[0]
     except IndexError:
-        reply = "`No GitHub Releases links found`\n"
+        reply = "No GitHub Releases links found\n"
         return reply
     reply = ''
     dl_url = ''
@@ -229,7 +229,7 @@ async def github(url: str) -> str:
     try:
         dl_url = download.headers["location"]
     except KeyError:
-        reply += "`Error: Can't extract the link`\n"
+        reply += "Error: Can't extract the link\n"
     name = link.split('/')[-1]
     reply += f'[{name}]({dl_url}) '
     return reply
@@ -240,7 +240,7 @@ async def androidfilehost(url: str) -> str:
     try:
         link = re.findall(r'\bhttps?://.*androidfilehost.*fid.*\S+', url)[0]
     except IndexError:
-        reply = "`No AFH links found`\n"
+        reply = "No AFH links found\n"
         return reply
     fid = re.findall(r'\?fid=(.*)', link)[0]
     session = requests.Session()
@@ -266,7 +266,7 @@ async def androidfilehost(url: str) -> str:
     }
     mirrors = None
     reply = ''
-    error = "`Error: Can't find Mirrors for the link`\n"
+    error = "Error: Can't find Mirrors for the link\n"
     try:
         req = session.post(
             'https://androidfilehost.com/libs/otf/mirrors.otf.php',
@@ -291,10 +291,10 @@ async def uptobox(request, url: str) -> str:
     try:
         link = re.findall(r'\bhttps?://.*uptobox\.com\S+', url)[0]
     except IndexError:
-        await request.edit('`No uptobox links found.`')
+        await request.edit('No uptobox links found.')
         return
     if USR_TOKEN is None:
-        await request.edit('`Set USR_TOKEN_UPTOBOX first!`')
+        await request.edit('Set USR_TOKEN_UPTOBOX first!')
         return
     if link.endswith('/'):
         index = -2
@@ -304,16 +304,16 @@ async def uptobox(request, url: str) -> str:
     origin = 'https://uptobox.com/api/link'
     """ Retrieve file informations """
     uri = f'{origin}/info?fileCodes={FILE_CODE}'
-    await request.edit('`Retrieving file informations...`')
+    await request.edit('Retrieving file informations...')
     async with aiohttp.ClientSession() as session:
         async with session.get(uri) as response:
             result = json.loads(await response.text())
             data = result.get('data').get('list')[0]
             if 'error' in data:
                 await request.edit(
-                    "`[ERROR]`\n"
-                    f"`statusCode`: **{data.get('error').get('code')}**\n"
-                    f"`reason`: **{data.get('error').get('message')}**"
+                    "[ERROR]\n"
+                    f"statusCode: **{data.get('error').get('code')}**\n"
+                    f"reason: **{data.get('error').get('message')}**"
                 )
                 return
             file_name = data.get('file_name')
@@ -328,13 +328,13 @@ async def uptobox(request, url: str) -> str:
                 wait = result.get('data').get('waiting')
                 waitingToken = result.get('data').get('waitingToken')
                 await request.edit(
-                    f'`Waiting for about {time_formatter(wait)}.`')
+                    f'Waiting for about {time_formatter(wait)}.')
                 # for some reason it doesn't go as i planned
                 # so make it 1 minute just to be save enough
                 await asyncio.sleep(wait + 60)
                 uri += f"&waitingToken={waitingToken}"
                 async with session.get(uri) as response:
-                    await request.edit('`Generating direct download link...`')
+                    await request.edit('Generating direct download link...')
                     result = json.loads(await response.text())
                     status = result.get('message')
                     if status == "Success":
@@ -345,10 +345,10 @@ async def uptobox(request, url: str) -> str:
                         return
                     else:
                         await request.edit(
-                            "`[ERROR]`\n"
-                            f"`statusCode`: **{result.get('statusCode')}**\n"
-                            f"`reason`: **{result.get('data')}**\n"
-                            f"`status`: **{status}**"
+                            "[ERROR]\n"
+                            f"statusCode: **{result.get('statusCode')}**\n"
+                            f"reason: **{result.get('data')}**\n"
+                            f"status: **{status}**"
                         )
                         return
             elif status == "Success":
@@ -359,10 +359,10 @@ async def uptobox(request, url: str) -> str:
                 return
             else:
                 await request.edit(
-                    "`[ERROR]`\n"
-                    f"`statusCode`: **{result.get('statusCode')}**\n"
-                    f"`reason`: **{result.get('data')}**\n"
-                    f"`status`: **{status}**"
+                    "[ERROR]\n"
+                    f"statusCode: **{result.get('statusCode')}**\n"
+                    f"reason: **{result.get('data')}**\n"
+                    f"status: **{status}**"
                 )
                 return
 
@@ -382,10 +382,10 @@ async def useragent():
 
 CMD_HELP.update({
     "direct":
-    ">`.direct <url>`"
+    ">.direct <url>"
     "\nUsage: Reply to a link or paste a URL to\n"
     "generate a direct download link\n\n"
     "List of supported URLs:\n"
-    "`Google Drive - Cloud Mail - Yandex.Disk - AFH - "
-    "ZippyShare - MediaFire - SourceForge - OSDN - GitHub`"
+    "Google Drive - Cloud Mail - Yandex.Disk - AFH - "
+    "ZippyShare - MediaFire - SourceForge - OSDN - GitHub"
 })
